@@ -183,200 +183,202 @@ export default function FloatTypesPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="container max-w-7xl py-8">
-        <div className="space-y-8">
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-bold">ARGO Float Types</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Discover the different types of autonomous oceanographic floats that make up the global Argo array, each
-              designed for specific research purposes and ocean depths.
-            </p>
-          </div>
+      <div className="flex items-center justify-center ">
+        <div className="container max-w-7xl py-8">
+          <div className="space-y-8">
+            {/* Header */}
+            <div className="text-center space-y-4">
+              <h1 className="text-4xl font-bold">ARGO Float Types</h1>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Discover the different types of autonomous oceanographic floats that make up the global Argo array, each
+                designed for specific research purposes and ocean depths.
+              </p>
+            </div>
 
-          {/* Global Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {globalStats.map((stat, index) => (
-              <Card key={index}>
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
-                      <p className="text-2xl font-bold">{stat.value}</p>
-                    </div>
-                    <stat.icon className={`w-8 h-8 ${stat.color}`} />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Float Types Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {floatTypes.map((floatType) => (
-              <Card key={floatType.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className={`w-12 h-12 rounded-lg ${floatType.color} flex items-center justify-center mb-4`}>
-                    <floatType.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle>{floatType.name}</CardTitle>
-                  <CardDescription>{floatType.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Max Depth</p>
-                      <p className="font-semibold">{floatType.depth}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Cycle</p>
-                      <p className="font-semibold">{floatType.cycle}</p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground mb-2">Parameters</p>
-                    <div className="flex flex-wrap gap-1">
-                      {floatType.parameters.map((param) => (
-                        <Badge key={param} variant="secondary" className="text-xs">
-                          {param}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center pt-4 border-t">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Active Floats</p>
-                      <p className="font-bold text-lg">{floatType.count}</p>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      Learn More
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Detailed Information */}
-          <Tabs defaultValue="core" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="core">Core Argo</TabsTrigger>
-              <TabsTrigger value="bgc">BGC Argo</TabsTrigger>
-              <TabsTrigger value="deep">Deep Argo</TabsTrigger>
-            </TabsList>
-
-            {floatTypes.map((floatType) => (
-              <TabsContent key={floatType.id} value={floatType.id} className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-lg ${floatType.color} flex items-center justify-center`}>
-                        <floatType.icon className="w-5 h-5 text-white" />
+            {/* Global Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {globalStats.map((stat, index) => (
+                <Card key={index}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+                        <p className="text-2xl font-bold">{stat.value}</p>
                       </div>
-                      {floatType.name}
-                    </CardTitle>
-                    <CardDescription className="text-base">{floatType.details.overview}</CardDescription>
-                  </CardHeader>
-                </Card>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Specifications */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Gauge className="w-5 h-5" />
-                        Technical Specifications
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {Object.entries(floatType.details.specifications).map(([key, value]) => (
-                        <div key={key} className="flex justify-between items-center py-2 border-b border-border/50">
-                          <span className="text-sm font-medium text-muted-foreground">{key}</span>
-                          <span className="text-sm font-semibold">{value}</span>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-
-                  {/* Measurements */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Activity className="w-5 h-5" />
-                        Measurement Capabilities
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {floatType.details.measurements.map((measurement, index) => (
-                        <div key={index} className="p-4 border rounded-lg">
-                          <div className="flex items-center gap-3 mb-2">
-                            <measurement.icon className="w-5 h-5 text-primary" />
-                            <h4 className="font-medium">{measurement.parameter}</h4>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <p className="text-muted-foreground">Range</p>
-                              <p className="font-medium">{measurement.range}</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground">Accuracy</p>
-                              <p className="font-medium">{measurement.accuracy}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Operation Cycle */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Calendar className="w-5 h-5" />
-                      Operation Cycle
-                    </CardTitle>
-                    <CardDescription>How {floatType.name.toLowerCase()} operate in the ocean</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <ArrowDown className="w-8 h-8 text-blue-600" />
-                        </div>
-                        <h4 className="font-medium mb-2">Descent</h4>
-                        <p className="text-sm text-muted-foreground">Float descends to parking depth (~1000m)</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <Waves className="w-8 h-8 text-green-600" />
-                        </div>
-                        <h4 className="font-medium mb-2">Drift</h4>
-                        <p className="text-sm text-muted-foreground">Drifts with ocean currents for 9-14 days</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <Activity className="w-8 h-8 text-purple-600" />
-                        </div>
-                        <h4 className="font-medium mb-2">Profile</h4>
-                        <p className="text-sm text-muted-foreground">Descends to max depth, then profiles upward</p>
-                      </div>
-                      <div className="text-center">
-                        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                          <Satellite className="w-8 h-8 text-orange-600" />
-                        </div>
-                        <h4 className="font-medium mb-2">Surface</h4>
-                        <p className="text-sm text-muted-foreground">Surfaces to transmit data via satellite</p>
-                      </div>
+                      <stat.icon className={`w-8 h-8 ${stat.color}`} />
                     </div>
                   </CardContent>
                 </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
+              ))}
+            </div>
+
+            {/* Float Types Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {floatTypes.map((floatType) => (
+                <Card key={floatType.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className={`w-12 h-12 rounded-lg ${floatType.color} flex items-center justify-center mb-4`}>
+                      <floatType.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <CardTitle>{floatType.name}</CardTitle>
+                    <CardDescription>{floatType.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">Max Depth</p>
+                        <p className="font-semibold">{floatType.depth}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">Cycle</p>
+                        <p className="font-semibold">{floatType.cycle}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-2">Parameters</p>
+                      <div className="flex flex-wrap gap-1">
+                        {floatType.parameters.map((param) => (
+                          <Badge key={param} variant="secondary" className="text-xs">
+                            {param}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-center pt-4 border-t">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Active Floats</p>
+                        <p className="font-bold text-lg">{floatType.count}</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        Learn More
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Detailed Information */}
+            <Tabs defaultValue="core" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="core">Core Argo</TabsTrigger>
+                <TabsTrigger value="bgc">BGC Argo</TabsTrigger>
+                <TabsTrigger value="deep">Deep Argo</TabsTrigger>
+              </TabsList>
+
+              {floatTypes.map((floatType) => (
+                <TabsContent key={floatType.id} value={floatType.id} className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-lg ${floatType.color} flex items-center justify-center`}>
+                          <floatType.icon className="w-5 h-5 text-white" />
+                        </div>
+                        {floatType.name}
+                      </CardTitle>
+                      <CardDescription className="text-base">{floatType.details.overview}</CardDescription>
+                    </CardHeader>
+                  </Card>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Specifications */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Gauge className="w-5 h-5" />
+                          Technical Specifications
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {Object.entries(floatType.details.specifications).map(([key, value]) => (
+                          <div key={key} className="flex justify-between items-center py-2 border-b border-border/50">
+                            <span className="text-sm font-medium text-muted-foreground">{key}</span>
+                            <span className="text-sm font-semibold">{value}</span>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+
+                    {/* Measurements */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Activity className="w-5 h-5" />
+                          Measurement Capabilities
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        {floatType.details.measurements.map((measurement, index) => (
+                          <div key={index} className="p-4 border rounded-lg">
+                            <div className="flex items-center gap-3 mb-2">
+                              <measurement.icon className="w-5 h-5 text-primary" />
+                              <h4 className="font-medium">{measurement.parameter}</h4>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                              <div>
+                                <p className="text-muted-foreground">Range</p>
+                                <p className="font-medium">{measurement.range}</p>
+                              </div>
+                              <div>
+                                <p className="text-muted-foreground">Accuracy</p>
+                                <p className="font-medium">{measurement.accuracy}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Operation Cycle */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Calendar className="w-5 h-5" />
+                        Operation Cycle
+                      </CardTitle>
+                      <CardDescription>How {floatType.name.toLowerCase()} operate in the ocean</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <ArrowDown className="w-8 h-8 text-blue-600" />
+                          </div>
+                          <h4 className="font-medium mb-2">Descent</h4>
+                          <p className="text-sm text-muted-foreground">Float descends to parking depth (~1000m)</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <Waves className="w-8 h-8 text-green-600" />
+                          </div>
+                          <h4 className="font-medium mb-2">Drift</h4>
+                          <p className="text-sm text-muted-foreground">Drifts with ocean currents for 9-14 days</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <Activity className="w-8 h-8 text-purple-600" />
+                          </div>
+                          <h4 className="font-medium mb-2">Profile</h4>
+                          <p className="text-sm text-muted-foreground">Descends to max depth, then profiles upward</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <Satellite className="w-8 h-8 text-orange-600" />
+                          </div>
+                          <h4 className="font-medium mb-2">Surface</h4>
+                          <p className="text-sm text-muted-foreground">Surfaces to transmit data via satellite</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              ))}
+            </Tabs>
+          </div>
+        </div> 
       </div>
     </div>
   )

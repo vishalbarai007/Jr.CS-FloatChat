@@ -45,8 +45,8 @@ export function EnhancedFloatMarker({
           <sphereGeometry args={[0.06, 16, 16]} />
           <meshStandardMaterial
             color={isHovered ? "#ff0000" : "#cc0000"}
-            emissive={isHovered ? "#ff0000" : "#660000"}
-            emissiveIntensity={isHovered ? 0.9 : 0.5}
+            emissive={isHovered ? "#ff0000" : "#550000"}
+            emissiveIntensity={isHovered ? 1.0 : 0.5}
           />
         </mesh>
 
@@ -55,15 +55,15 @@ export function EnhancedFloatMarker({
           <coneGeometry args={[0.03, 0.12, 16]} />
           <meshStandardMaterial
             color={isHovered ? "#ff0000" : "#cc0000"}
-            emissive={isHovered ? "#ff0000" : "#660000"}
-            emissiveIntensity={isHovered ? 0.9 : 0.5}
+            emissive={isHovered ? "#ff0000" : "#550000"}
+            emissiveIntensity={isHovered ? 1.0 : 0.5}
           />
         </mesh>
       </group>
 
       {/* Tooltip */}
       {isHovered && (
-        <Html distanceFactor={10}>
+        <Html distanceFactor={12} center>
           <div className="bg-black/80 text-white px-2 py-1 rounded text-xs whitespace-nowrap pointer-events-none">
             {float.Location}
           </div>

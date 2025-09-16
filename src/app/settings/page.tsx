@@ -88,197 +88,199 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="container max-w-4xl py-8">
-        <div className="space-y-8">
-          {/* Header */}
-          <div className="flex items-center space-x-4">
-            <SettingsIcon className="h-8 w-8 text-primary" />
-            <div>
-              <h1 className="text-3xl font-bold">Settings</h1>
-              <p className="text-muted-foreground">Manage your account preferences and data</p>
+      <div className="flex items-center justify-center ">
+        <div className="container max-w-4xl py-8">
+          <div className="space-y-8">
+            {/* Header */}
+            <div className="flex items-center space-x-4">
+              <SettingsIcon className="h-8 w-8 text-primary" />
+              <div>
+                <h1 className="text-3xl font-bold">Settings</h1>
+                <p className="text-muted-foreground">Manage your account preferences and data</p>
+              </div>
             </div>
-          </div>
 
-          {success && (
-            <Alert>
-              <AlertDescription>{success}</AlertDescription>
-            </Alert>
-          )}
+            {success && (
+              <Alert>
+                <AlertDescription>{success}</AlertDescription>
+              </Alert>
+            )}
 
-          <div className="grid gap-8">
-            {/* General Settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <SettingsIcon className="h-5 w-5" />
-                  <span>General</span>
-                </CardTitle>
-                <CardDescription>Configure your general application preferences</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Dark Mode</Label>
-                    <p className="text-sm text-muted-foreground">Switch between light and dark themes</p>
+            <div className="grid gap-8">
+              {/* General Settings */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <SettingsIcon className="h-5 w-5" />
+                    <span>General</span>
+                  </CardTitle>
+                  <CardDescription>Configure your general application preferences</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Dark Mode</Label>
+                      <p className="text-sm text-muted-foreground">Switch between light and dark themes</p>
+                    </div>
+                    <Switch
+                      checked={settings.darkMode}
+                      onCheckedChange={(checked) => handleSettingChange("darkMode", checked)}
+                    />
                   </div>
-                  <Switch
-                    checked={settings.darkMode}
-                    onCheckedChange={(checked) => handleSettingChange("darkMode", checked)}
-                  />
-                </div>
 
-                <Separator />
+                  <Separator />
 
-                <div className="space-y-2">
-                  <Label>Language</Label>
-                  <Select value={settings.language} onValueChange={(value) => handleSettingChange("language", value)}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="en">English</SelectItem>
-                      <SelectItem value="es">Spanish</SelectItem>
-                      <SelectItem value="fr">French</SelectItem>
-                      <SelectItem value="de">German</SelectItem>
-                      <SelectItem value="zh">Chinese</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Notifications */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Bell className="h-5 w-5" />
-                  <span>Notifications</span>
-                </CardTitle>
-                <CardDescription>Control how you receive notifications and updates</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Push Notifications</Label>
-                    <p className="text-sm text-muted-foreground">
-                      Receive notifications about new features and updates
-                    </p>
+                  <div className="space-y-2">
+                    <Label>Language</Label>
+                    <Select value={settings.language} onValueChange={(value) => handleSettingChange("language", value)}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="es">Spanish</SelectItem>
+                        <SelectItem value="fr">French</SelectItem>
+                        <SelectItem value="de">German</SelectItem>
+                        <SelectItem value="zh">Chinese</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <Switch
-                    checked={settings.notifications}
-                    onCheckedChange={(checked) => handleSettingChange("notifications", checked)}
-                  />
-                </div>
+                </CardContent>
+              </Card>
 
-                <Separator />
-
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Email Updates</Label>
-                    <p className="text-sm text-muted-foreground">Receive email updates about ocean data and research</p>
+              {/* Notifications */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Bell className="h-5 w-5" />
+                    <span>Notifications</span>
+                  </CardTitle>
+                  <CardDescription>Control how you receive notifications and updates</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Push Notifications</Label>
+                      <p className="text-sm text-muted-foreground">
+                        Receive notifications about new features and updates
+                      </p>
+                    </div>
+                    <Switch
+                      checked={settings.notifications}
+                      onCheckedChange={(checked) => handleSettingChange("notifications", checked)}
+                    />
                   </div>
-                  <Switch
-                    checked={settings.emailUpdates}
-                    onCheckedChange={(checked) => handleSettingChange("emailUpdates", checked)}
-                  />
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Data & Privacy */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Database className="h-5 w-5" />
-                  <span>Data & Privacy</span>
-                </CardTitle>
-                <CardDescription>Manage your data retention and privacy settings</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Auto-save Chat History</Label>
-                    <p className="text-sm text-muted-foreground">Automatically save your chat conversations</p>
+                  <Separator />
+
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Email Updates</Label>
+                      <p className="text-sm text-muted-foreground">Receive email updates about ocean data and research</p>
+                    </div>
+                    <Switch
+                      checked={settings.emailUpdates}
+                      onCheckedChange={(checked) => handleSettingChange("emailUpdates", checked)}
+                    />
                   </div>
-                  <Switch
-                    checked={settings.autoSave}
-                    onCheckedChange={(checked) => handleSettingChange("autoSave", checked)}
-                  />
-                </div>
+                </CardContent>
+              </Card>
 
-                <Separator />
+              {/* Data & Privacy */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2">
+                    <Database className="h-5 w-5" />
+                    <span>Data & Privacy</span>
+                  </CardTitle>
+                  <CardDescription>Manage your data retention and privacy settings</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Auto-save Chat History</Label>
+                      <p className="text-sm text-muted-foreground">Automatically save your chat conversations</p>
+                    </div>
+                    <Switch
+                      checked={settings.autoSave}
+                      onCheckedChange={(checked) => handleSettingChange("autoSave", checked)}
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <Label>Data Retention Period</Label>
-                  <Select
-                    value={settings.dataRetention}
-                    onValueChange={(value) => handleSettingChange("dataRetention", value)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1month">1 Month</SelectItem>
-                      <SelectItem value="3months">3 Months</SelectItem>
-                      <SelectItem value="6months">6 Months</SelectItem>
-                      <SelectItem value="1year">1 Year</SelectItem>
-                      <SelectItem value="forever">Forever</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-sm text-muted-foreground">How long to keep your chat history and uploaded data</p>
-                </div>
+                  <Separator />
 
-                <Separator />
+                  <div className="space-y-2">
+                    <Label>Data Retention Period</Label>
+                    <Select
+                      value={settings.dataRetention}
+                      onValueChange={(value) => handleSettingChange("dataRetention", value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1month">1 Month</SelectItem>
+                        <SelectItem value="3months">3 Months</SelectItem>
+                        <SelectItem value="6months">6 Months</SelectItem>
+                        <SelectItem value="1year">1 Year</SelectItem>
+                        <SelectItem value="forever">Forever</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-sm text-muted-foreground">How long to keep your chat history and uploaded data</p>
+                  </div>
 
-                <div className="space-y-4">
-                  <Button
-                    variant="outline"
-                    onClick={handleClearChatHistory}
-                    className="w-full justify-start bg-transparent"
-                  >
+                  <Separator />
+
+                  <div className="space-y-4">
+                    <Button
+                      variant="outline"
+                      onClick={handleClearChatHistory}
+                      className="w-full justify-start bg-transparent"
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Clear Chat History
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Danger Zone */}
+              <Card className="border-destructive/50">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2 text-destructive">
+                    <AlertTriangle className="h-5 w-5" />
+                    <span>Danger Zone</span>
+                  </CardTitle>
+                  <CardDescription>Irreversible and destructive actions</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Alert variant="destructive">
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertDescription>
+                      These actions cannot be undone. Please be certain before proceeding.
+                    </AlertDescription>
+                  </Alert>
+
+                  <Button variant="destructive" onClick={handleDeleteAccount} className="w-full justify-start">
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Clear Chat History
+                    Delete Account
                   </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            {/* Danger Zone */}
-            <Card className="border-destructive/50">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-destructive">
-                  <AlertTriangle className="h-5 w-5" />
-                  <span>Danger Zone</span>
-                </CardTitle>
-                <CardDescription>Irreversible and destructive actions</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Alert variant="destructive">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertDescription>
-                    These actions cannot be undone. Please be certain before proceeding.
-                  </AlertDescription>
-                </Alert>
-
-                <Button variant="destructive" onClick={handleDeleteAccount} className="w-full justify-start">
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Account
+              {/* Save Button */}
+              <div className="flex justify-end">
+                <Button onClick={handleSaveSettings} disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    "Save Settings"
+                  )}
                 </Button>
-              </CardContent>
-            </Card>
-
-            {/* Save Button */}
-            <div className="flex justify-end">
-              <Button onClick={handleSaveSettings} disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  "Save Settings"
-                )}
-              </Button>
+              </div>
             </div>
           </div>
         </div>

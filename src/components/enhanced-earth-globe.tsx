@@ -15,7 +15,7 @@ export function EnhancedEarthGlobe({
   const earthRef = useRef<THREE.Mesh>(null)
 
   // const earthTexture = useTexture("/assets/3d/texture_earth.jpg")
-  const earthTexture = useTexture("/textures/earth_daymap.jpg")
+  const earthTexture = useTexture("/textures/earth_daymap_2k.jpg")
 
 
   // Rotate Earth slowly
