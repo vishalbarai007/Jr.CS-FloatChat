@@ -1,8 +1,8 @@
 "use client"
 
-import { useRef } from "react"
-import { useFrame } from "@react-three/fiber"
-import * as THREE from "three"
+import { useRef, useState } from "react"
+import { Html } from "@react-three/drei"
+import type * as THREE from "three"
 
 interface FloatData {
   Latitude: string
@@ -16,35 +16,59 @@ export function EnhancedFloatMarker({
   onClick,
 }: {
   float: FloatData
-  position: THREE.Vector3
+  position: [number, number, number]
   onClick: () => void
 }) {
-  const markerRef = useRef<THREE.Mesh>(null)
-
-  // Add a subtle animation (pulsating scale)
-  useFrame(({ clock }) => {
-    if (markerRef.current) {
-      const t = clock.getElapsedTime()
-      markerRef.current.scale.setScalar(1 + Math.sin(t * 2) * 0.1) // 10% pulse
-    }
-  })
+  const markerRef = useRef<THREE.Group>(null)
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <mesh
-      ref={markerRef}
-      position={position}
-      onClick={onClick}
-      onPointerOver={(e) => {
-        e.stopPropagation()
-        document.body.style.cursor = "pointer"
-      }}
-      onPointerOut={() => {
-        document.body.style.cursor = "default"
-      }}
-    >
-      {/* Marker sphere */}
-      <sphereGeometry args={[0.05, 32, 32]} />
-      <meshStandardMaterial color="orange" emissive="orange" emissiveIntensity={0.6} />
-    </mesh>
+    <group position={position} ref={markerRef}>
+      {/* Red Pin (sphere + cone) */}
+      <group
+        onClick={(e) => {
+          e.stopPropagation()
+          onClick()
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation()
+          setIsHovered(true)
+          document.body.style.cursor = "pointer"
+        }}
+        onPointerOut={() => {
+          setIsHovered(false)
+          document.body.style.cursor = "default"
+        }}
+      >
+        {/* Pin head (sphere) */}
+        <mesh position={[0, 0.12, 0]}>
+          <sphereGeometry args={[0.06, 16, 16]} />
+          <meshStandardMaterial
+            color={isHovered ? "#ff0000" : "#cc0000"}
+            emissive={isHovered ? "#ff0000" : "#660000"}
+            emissiveIntensity={isHovered ? 0.9 : 0.5}
+          />
+        </mesh>
+
+        {/* Pin body (cone) */}
+        <mesh rotation={[Math.PI, 0, 0]} position={[0, -0.05, 0]}>
+          <coneGeometry args={[0.03, 0.12, 16]} />
+          <meshStandardMaterial
+            color={isHovered ? "#ff0000" : "#cc0000"}
+            emissive={isHovered ? "#ff0000" : "#660000"}
+            emissiveIntensity={isHovered ? 0.9 : 0.5}
+          />
+        </mesh>
+      </group>
+
+      {/* Tooltip */}
+      {isHovered && (
+        <Html distanceFactor={10}>
+          <div className="bg-black/80 text-white px-2 py-1 rounded text-xs whitespace-nowrap pointer-events-none">
+            {float.Location}
+          </div>
+        </Html>
+      )}
+    </group>
   )
 }

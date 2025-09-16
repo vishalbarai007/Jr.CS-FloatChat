@@ -3,7 +3,7 @@
 import { useTexture } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useRef } from "react"
-import * as THREE from "three"
+import type * as THREE from "three"
 
 export function EnhancedEarthGlobe({
   isHovered,
@@ -14,17 +14,14 @@ export function EnhancedEarthGlobe({
 }) {
   const earthRef = useRef<THREE.Mesh>(null)
 
-  // Load textures
-  const [colorMap, bumpMap, specularMap] = useTexture([
-    "/textures/earth_daymap.jpg",
-    // "/textures/earth_bump.jpg",
-    // "/textures/earth_specular.jpg",
-  ])
+  // const earthTexture = useTexture("/assets/3d/texture_earth.jpg")
+  const earthTexture = useTexture("/textures/earth_daymap.jpg")
+
 
   // Rotate Earth slowly
   useFrame(() => {
     if (earthRef.current) {
-      earthRef.current.rotation.y += 0.001
+      earthRef.current.rotation.y += 0.002
     }
   })
 
@@ -38,15 +35,7 @@ export function EnhancedEarthGlobe({
       {/* geometry */}
       <sphereGeometry args={[1, 64, 64]} />
 
-      {/* material */}
-      <meshStandardMaterial
-        map={colorMap}
-        bumpMap={bumpMap}
-        bumpScale={0.05}
-        roughnessMap={specularMap} // treat specular as roughness
-        roughness={0.8}
-        metalness={0.1}
-      />
+      <meshStandardMaterial map={earthTexture} roughness={0.8} metalness={0.1} bumpScale={0.02} />
     </mesh>
   )
 }
